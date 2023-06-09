@@ -1,6 +1,7 @@
 /*
+ * laplacian.cpp
  *
- *
+ * Laplacian helper functions
  */
 
 #include "laplacian.hpp"
@@ -8,6 +9,13 @@
 #include <opencv2/highgui.hpp>
 
 namespace laplacian {
+	
+	/*
+	 * Inputs:
+	 * 	img --> Grayscale image loaded as an OpenCV Matrix
+	 * Outputs:
+	 * 	score --> Blur score of img
+	 */
 	double CalculateBlur(cv::Mat &img) {
 		cv::Mat dst;
 		double score = 0.0;
@@ -35,6 +43,12 @@ namespace laplacian {
 		return score;
 	}
 
+	/*
+	 * Inputs:
+	 * 	img --> Grayscale image loaded as an OpenCV Matrix
+	 * Outputs:
+	 *  mean --> Mean of pixel values in img
+	 */
 	double CalculateMean(cv::Mat &img) {
 		double mean = 0.0;
 		int temp = 0;
@@ -54,8 +68,15 @@ namespace laplacian {
 		return mean;
 	}
 
+	/*
+	 * Inputs:
+	 * 	img --> Grayscale image loaded as an OpenCV Matrix
+	 * 	mean --> Calculated mean of img
+	 * Outputs:
+	 *  variance --> Calculated variance of img
+	 */
 	double CalculateVariance(cv::Mat &img, double mean) {
-		double variance = static_cast<double>(img.ptr(0)[0]);
+		double variance = static_cast<double>(img.ptr(0)[0]); // Initialize to first pixel value
 		auto imgsize = img.size();
 		double imgsizebytes = static_cast<double>(imgsize.width * imgsize.height);
 

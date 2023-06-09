@@ -1,7 +1,7 @@
 /*
+ * laplacian.hpp
  *
- *
- *
+ * Laplacian helper functions
  */
 
 #pragma once

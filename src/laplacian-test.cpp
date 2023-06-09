@@ -1,7 +1,11 @@
 /*
+ * laplacian-test
+ * laplacian-test.cpp
  *
+ * Matthew Geiger
  *
- *
+ * By calculating the variation of an image with an applied laplacian filter
+ * you can calculate how blurry an image is.
  */
 
 #include "laplacian.hpp"
@@ -23,13 +27,26 @@ int main(int argc, char **argv) {
 	if(argc != 2)
 		usage(argv[0]);
 
-	cv::Mat img(cv::imread(std::string(argv[1]), cv::IMREAD_GRAYSCALE));
+	std::string imgfile(argv[1]);
+
+	// Load image into memory
+	cv::Mat img(cv::imread(imgfile, cv::IMREAD_GRAYSCALE));
 	if(img.empty())
 		FATAL("Failed to load image");
 
-	double score = laplacian::CalculateBlur(img);	
+	// Record time before function call
+	auto profile_start = std::chrono::steady_clock::now();
 
+	// Calculate blur score	
+	double score = laplacian::CalculateBlur(img);	
+	
+	// Calculate function runtime
+	auto profile_end = std::chrono::steady_clock::now();
+	std::chrono::duration<double> elapsed_time = profile_end-profile_start;
+
+	// Output results
 	std::cout << "Image score: " << score << std::endl;
+	std::cout << "Elapsed time: " << elapsed_time.count() << std::endl;
 
 	return EXIT_SUCCESS;
 }
