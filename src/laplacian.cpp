@@ -19,10 +19,12 @@ namespace laplacian {
 
 		// Calculate the laplacian		
 		cv::Laplacian(img, dst, img.depth());
-		
+
+#ifdef _DEBUG		
 		cv::imshow(std::string("Laplacian"), dst);
 		cv::waitKey(0);
 		cv::destroyAllWindows();
+#endif
 
 		// Determine the mean
 		mean = CalculateMean(dst);
